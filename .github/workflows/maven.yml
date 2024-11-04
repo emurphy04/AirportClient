@@ -20,8 +20,8 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: 'temurin'  # Use 'temurin' for AdoptOpenJDK
+          java-version: '17'       # Adjust version as needed for your project
 
       - name: Cache Maven packages
         uses: actions/cache@v3
@@ -43,3 +43,4 @@ jobs:
         with:
           name: test-results
           path: target/surefire-reports/  # Adjust to your test output location
+
