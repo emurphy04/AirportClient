@@ -7,6 +7,11 @@ public class Airport {
 
     public Airport(){}
 
+    public Airport(String airport_name, String code){
+        this.airport_name = airport_name;
+        this.code = code;
+    }
+
     public Airport(int airport_id, String airport_name, String code) {
         this.airport_id = airport_id;
         this.airport_name = airport_name;

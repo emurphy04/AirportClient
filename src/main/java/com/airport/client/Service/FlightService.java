@@ -1,7 +1,6 @@
 package com.airport.client.Service;
 
-import com.airport.client.Model.City;
-import com.airport.client.Model.Flight;
+import com.airport.client.Model.*;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +29,11 @@ public class FlightService {
         if (flights != null) {
             for (Flight flight : flights) {
                 System.out.println(flight.toString());
+                List<Passenger> passengers = flight.getPassengers();
+                for (Passenger passenger : passengers) {
+                    System.out.println(passenger.toString());
+                }
+                System.out.println();
             }
         }
     }
@@ -38,11 +42,31 @@ public class FlightService {
         String url = "http://localhost:8080/flights/"+id;
         Flight flight = restTemplate.getForObject(url, Flight.class);
         System.out.println(flight.toString());
+        List<Passenger> passengers = flight.getPassengers();
+        for (Passenger passenger : passengers) {
+            System.out.println(passenger.toString());
+        }
+        System.out.println();
     }
 
     public void getFlightByPassenger(int id){
         String url = "http://localhost:8080/flights/passenger/"+id;
         Flight flight = restTemplate.getForObject(url, Flight.class);
         System.out.println(flight.toString());
+        List<Passenger> passengers = flight.getPassengers();
+        for (Passenger passenger : passengers) {
+            System.out.println(passenger.toString());
+        }
+        System.out.println();
+    }
+
+    public void addFlight(FlightAdder addedFlight){
+        String url = "http://localhost:8080/flights";
+        try {
+            restTemplate.postForEntity(url, addedFlight, Flight.class);
+            System.out.println("Flight Scheduled!");
+        } catch (Exception e){
+            System.out.println("Flight failed, Error: "+e);
+        }
     }
 }

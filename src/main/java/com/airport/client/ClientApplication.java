@@ -1,14 +1,18 @@
 package com.airport.client;
 
-import com.airport.client.Model.Flight;
+import com.airport.client.Model.*;
 import com.airport.client.Service.AirportService;
 import com.airport.client.Service.CityService;
 import com.airport.client.Service.FlightService;
+import com.airport.client.Service.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -26,6 +30,9 @@ public class ClientApplication implements CommandLineRunner {
 
 	@Autowired
 	private FlightService flightService;
+
+	@Autowired
+	private PassengerService passengerService;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -157,9 +164,15 @@ public class ClientApplication implements CommandLineRunner {
 							switch (choice) {
 								case "1":
 									// get all passengers
+									passengerService.getPassengers();
 									break;
 								case "2":
 									// get passenger by id
+									System.out.println();
+									System.out.println("What is the Passenger ID?");
+									int id = input.nextInt();
+									input.nextLine();
+									passengerService.getPassengerById(id);
 									break;
 								default:
 									System.out.println("Invalid Input, please try again.");
@@ -174,7 +187,6 @@ public class ClientApplication implements CommandLineRunner {
 					break;
 
 				case "2":
-					// upload data
 					System.out.println();
 					System.out.println("What data would you like to upload?");
 					System.out.println();
@@ -186,20 +198,57 @@ public class ClientApplication implements CommandLineRunner {
 
 					switch (choice) {
 						case "1":
-							System.out.println("Enter Airport ID to upload:");
-							// get airport ID and upload data
+							System.out.println("Enter the name of the airport you would like to add:");
+							String name = input.nextLine();
+							System.out.println();
+							System.out.println("Enter the airport code:");
+							String code = input.nextLine();
+							airportService.addAirport(new Airport(name, code));
 							break;
 						case "2":
-							System.out.println("Enter City ID to upload:");
-							// get city ID and upload data
+							System.out.println("Enter the name of the city you would like to add");
+							name = input.nextLine();
+							System.out.println("Enter the province the city resides in");
+							String province = input.nextLine();
+							System.out.println("Enter the population of the province");
+							int pop = input.nextInt();
+							input.nextLine();
+							System.out.println("ID of the airport for the city");
+							int airport_id = input.nextInt();
+							input.nextLine();
+							cityService.addCity(new City(name, province, pop, airport_id));
 							break;
 						case "3":
-							System.out.println("Enter Flight ID to upload:");
-							// get flight ID and upload data
+							System.out.println("Enter the flight number");
+							String flightNumber = input.nextLine();
+							System.out.println("Enter the ID for the origin airport");
+							int origin = input.nextInt();
+							input.nextLine();
+							System.out.println("Enter the ID for the destination airport");
+							int dest = input.nextInt();
+							input.nextLine();
+							System.out.println("Enter Passenger IDs, when you want to stop adding enter STOP");
+							List<Integer> passenger_ids = new ArrayList<>();
+							String userInput = "";
+							while(!userInput.equals("STOP")){
+								userInput = input.nextLine();
+								if (!Objects.equals(userInput, "STOP")){passenger_ids.add(Integer.parseInt(userInput));}
+							}
+							System.out.println(flightNumber);
+							System.out.println(origin);
+							System.out.println(dest);
+							System.out.println(passenger_ids);
+							flightService.addFlight(new FlightAdder(flightNumber, origin, dest, passenger_ids));
 							break;
 						case "4":
-							System.out.println("Enter Passenger ID to upload:");
 							// get passenger ID and upload data
+							System.out.println("Enter the first name of the passenger");
+							String first_name = input.nextLine();
+							System.out.println("Enter the last name of the passenger");
+							String last_name = input.nextLine();
+							System.out.println("Enther the phone number of the passenger");
+							String phone_number = input.nextLine();
+							passengerService.addPassenger(new Passenger(first_name, last_name, phone_number));
 							break;
 						default:
 							System.out.println("Invalid Input, please try again.");
@@ -254,8 +303,11 @@ public class ClientApplication implements CommandLineRunner {
 
 					switch (choice) {
 						case "1":
-							System.out.println("Enter Airport ID to delete:");
 							// get airport ID and delete data
+							airportService.getAirports();
+							System.out.println();
+							System.out.println("Enter Airport ID to delete:");
+							
 							break;
 						case "2":
 							System.out.println("Enter City ID to delete:");

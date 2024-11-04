@@ -6,9 +6,24 @@ public class City {
     private String province;
     private int population;
     private Airport airport;
+    private int airport_id;
 
     public City(){
 
+    }
+
+    public City(String name, String province, int population, int airport_id) {
+        this.name = name;
+        this.province = province;
+        this.population = population;
+        this.airport_id = airport_id;
+    }
+
+    public City(String name, String province, int population, Airport airport) {
+        this.name = name;
+        this.province = province;
+        this.population = population;
+        this.airport = airport;
     }
 
     public City(int city_id, String name, String province, int population, Airport airport) {
@@ -57,6 +72,14 @@ public class City {
 
     public void setAirport(Airport airport) {
         this.airport = airport;
+    }
+
+    public int getAirport_id() {
+        return airport_id;
+    }
+
+    public void setAirport_id(int airport_id) {
+        this.airport_id = airport_id;
     }
 
     @Override

@@ -40,4 +40,14 @@ public class CityService {
         System.out.println(city.toString());
 
     }
+
+    public void addCity(City addedCity){
+        String url = "http://localhost:8080/cities";
+        try {
+            restTemplate.postForEntity(url, addedCity, City.class);
+            System.out.println("City Added!");
+        } catch (Exception e){
+            System.out.println("City Failed, Error: "+e);
+        }
+    }
 }

@@ -37,6 +37,15 @@ public class AirportService {
         String url = "http://localhost:8080/airports/"+id;
         Airport airport = restTemplate.getForObject(url, Airport.class);
         System.out.println(airport.toString());
+    }
 
+    public void addAirport(Airport addedAirport){
+        String url = "http://localhost:8080/airports";
+        try {
+            restTemplate.postForEntity(url, addedAirport, Airport.class);
+            System.out.println("Airport Added!");
+        } catch (Exception e){
+            System.out.println("Airport Failed, Error: "+e);
+        }
     }
 }
