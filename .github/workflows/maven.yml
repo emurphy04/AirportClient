@@ -35,6 +35,8 @@ jobs:
         run: mvn clean verify -DskipTests -B
 
       - name: Run tests
+        env:
+          CI_MODE: "true"  # Set an environment variable for CI mode
         run: mvn test
 
       - name: Upload test results
