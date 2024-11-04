@@ -246,7 +246,7 @@ public class ClientApplication implements CommandLineRunner {
 							String first_name = input.nextLine();
 							System.out.println("Enter the last name of the passenger");
 							String last_name = input.nextLine();
-							System.out.println("Enther the phone number of the passenger");
+							System.out.println("Enter the phone number of the passenger");
 							String phone_number = input.nextLine();
 							passengerService.addPassenger(new Passenger(first_name, last_name, phone_number));
 							break;
@@ -269,20 +269,100 @@ public class ClientApplication implements CommandLineRunner {
 
 					switch (choice) {
 						case "1":
-							System.out.println("Enter Airport ID to edit:");
 							// get airport ID and edit data
+							airportService.getAirports();
+							System.out.println();
+							System.out.println("Enter Airport ID to edit:");
+							int id = input.nextInt();
+							input.nextLine();
+							System.out.println("ORIGINAL:");
+							airportService.getAirportById(id);
+							System.out.println();
+							System.out.println("Enter the updated name: ");
+							String name = input.nextLine();
+							System.out.println();
+							System.out.println("Enter the updated code: ");
+							String code = input.nextLine();
+							airportService.updateAirport(id, name, code);
 							break;
 						case "2":
-							System.out.println("Enter City ID to edit:");
 							// get city ID and edit data
+							cityService.getCities();
+							System.out.println();
+							System.out.println("Enter City ID to edit:");
+							id = input.nextInt();
+							input.nextLine();
+							System.out.println("ORIGINAL:");
+							cityService.getCityById(id);
+							System.out.println();
+							System.out.println("Enter the updated name: ");
+							name = input.nextLine();
+							System.out.println();
+							System.out.println("Enter the updated province: ");
+							String province = input.nextLine();
+							System.out.println();
+							System.out.println("Enter the updated population: ");
+							int pop = input.nextInt();
+							input.nextLine();
+							System.out.println();
+							System.out.println("Enter the updated airport id: ");
+							int airport_id = input.nextInt();
+							input.nextLine();
+							cityService.updateCity(id, name, province, pop, airport_id);
 							break;
 						case "3":
-							System.out.println("Enter Flight ID to edit:");
 							// get flight ID and edit data
+							flightService.getFlights();
+							System.out.println();
+							System.out.println("Enter Flight ID to edit:");
+							id = input.nextInt();
+							input.nextLine();
+							System.out.println("ORIGINAL:");
+							flightService.getFlightById(id);
+							System.out.println();
+							System.out.println("Enter the updated flight number: ");
+							String flight_number = input.nextLine();
+							System.out.println();
+							System.out.println("Enter the updated origin: ");
+							int origin = input.nextInt();
+							System.out.println();
+							System.out.println("Enter the updated destination: ");
+							int destination = input.nextInt();
+							input.nextLine();
+							System.out.println();
+							System.out.println("Enter Passenger IDs, when you want to stop adding enter STOP");
+							List<Integer> passenger_ids = new ArrayList<>();
+							String userInput = "";
+							while(!userInput.equals("STOP")){
+								userInput = input.nextLine();
+								if (!Objects.equals(userInput, "STOP")){passenger_ids.add(Integer.parseInt(userInput));}
+							}
+							System.out.println(flight_number);
+							System.out.println(origin);
+							System.out.println(destination);
+							System.out.println(passenger_ids);
+							System.out.println(id);
+							flightService.updateFlight(id, flight_number, origin, destination, passenger_ids);
 							break;
 						case "4":
-							System.out.println("Enter Passenger ID to edit:");
 							// get passenger ID and edit data
+							passengerService.getPassengers();
+							System.out.println();
+							System.out.println("Enter Passenger ID to edit:");
+							id = input.nextInt();
+							input.nextLine();
+							System.out.println("ORIGINAL:");
+							passengerService.getPassengerById(id);
+							System.out.println();
+							System.out.println("Enter the updated first name: ");
+							String first_name = input.nextLine();
+							System.out.println();
+							System.out.println("Enter the updated last name: ");
+							String last_name = input.nextLine();
+							System.out.println();
+							System.out.println("Enter the updated phone number: ");
+							String phone_number = input.nextLine();
+							passengerService.updatePassenger(id, first_name, last_name, phone_number);
 							break;
 						default:
 							System.out.println("Invalid Input, please try again.");
@@ -307,19 +387,36 @@ public class ClientApplication implements CommandLineRunner {
 							airportService.getAirports();
 							System.out.println();
 							System.out.println("Enter Airport ID to delete:");
-							
+							int id = input.nextInt();
+							input.nextLine();
+							airportService.deleteAirport(id);
 							break;
 						case "2":
-							System.out.println("Enter City ID to delete:");
 							// get city ID and delete data
+							cityService.getCities();
+							System.out.println();
+							System.out.println("Enter City ID to delete:");
+							id = input.nextInt();
+							input.nextLine();
+							cityService.deleteCity(id);
 							break;
 						case "3":
-							System.out.println("Enter Flight ID to delete:");
 							// get flight ID and delete data
+							flightService.getFlights();
+							System.out.println();
+							System.out.println("Enter Flight ID to delete:");
+							id = input.nextInt();
+							input.nextLine();
+							flightService.deleteFlight(id);
 							break;
 						case "4":
-							System.out.println("Enter Passenger ID to delete:");
 							// get passenger ID and delete data
+							passengerService.getPassengers();
+							System.out.println();
+							System.out.println("Enter Passenger ID to delete:");
+							id = input.nextInt();
+							input.nextLine();
+							passengerService.deletePassenger(id);
 							break;
 						default:
 							System.out.println("Invalid Input, please try again.");
