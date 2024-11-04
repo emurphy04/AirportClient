@@ -29,13 +29,15 @@ public class ClientApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		if ("true".equals(System.getenv("CI_MODE"))) {
-			System.out.println("CI mode detected, exiting application.");
-			System.exit(0);
-		}
+
 
 		Scanner input = new Scanner(System.in);
 		boolean running = true;
+
+		if ("true".equals(System.getenv("CI_MODE"))) {
+			System.out.println("CI mode detected, exiting application.");
+			running = false;
+		}
 		while (running) {
 			System.out.println();
 			System.out.println("Welcome to the airport management system!");
