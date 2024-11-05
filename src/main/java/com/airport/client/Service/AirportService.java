@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AirportService {
@@ -44,6 +46,32 @@ public class AirportService {
         try {
             restTemplate.postForEntity(url, addedAirport, Airport.class);
             System.out.println("Airport Added!");
+        } catch (Exception e){
+            System.out.println("Airport Failed, Error: "+e);
+        }
+    }
+
+    public void deleteAirport(int id) {
+        String url = "http://localhost:8080/airports/"+id;
+        try {
+            restTemplate.delete(url);
+            System.out.println("Airport Removed!");
+        } catch (Exception e){
+            System.out.println("Airport Failed, Error: "+e);
+        }
+    }
+
+    public void updateAirport(int id, String new_name, String new_code) {
+        try {
+            String url = "http://localhost:8080/airports/" + id;
+
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("airport_name", new_name);
+            updates.put("code", new_code);
+
+            restTemplate.put(url, updates);
+
+            System.out.println("Airport updated successfully.");
         } catch (Exception e){
             System.out.println("Airport Failed, Error: "+e);
         }

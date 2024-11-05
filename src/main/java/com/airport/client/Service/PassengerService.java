@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PassengerService {
@@ -49,6 +51,33 @@ public class PassengerService {
             System.out.println("Passenger added!");
         } catch (Exception e){
             System.out.println("Passenger failed, Error: "+e);
+        }
+    }
+
+    public void deletePassenger(int id) {
+        String url = "http://localhost:8080/passengers/"+id;
+        try {
+            restTemplate.delete(url);
+            System.out.println("Passenger Removed!");
+        } catch (Exception e){
+            System.out.println("Passenger failed, Error: "+e);
+        }
+    }
+
+    public void updatePassenger(int id, String firstName, String lastName, String phoneNumber) {
+        try {
+            String url = "http://localhost:8080/passengers/"+id;
+
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("first_name", firstName);
+            updates.put("last_name", lastName);
+            updates.put("phone_number", phoneNumber);
+
+            restTemplate.put(url, updates);
+
+            System.out.println("Passenger updated successfully.");
+        } catch (Exception e){
+            System.out.println("Passenger Failed, Error: "+e);
         }
     }
 }

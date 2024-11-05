@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class FlightService {
@@ -67,6 +69,34 @@ public class FlightService {
             System.out.println("Flight Scheduled!");
         } catch (Exception e){
             System.out.println("Flight failed, Error: "+e);
+        }
+    }
+
+    public void deleteFlight(int id) {
+        String url = "http://localhost:8080/flights/"+id;
+        try {
+            restTemplate.delete(url);
+            System.out.println("Flight Cancelled!");
+        } catch (Exception e){
+            System.out.println("Flight failed, Error: "+e);
+        }
+    }
+
+    public void updateFlight(int id, String flight_number, int new_origin, int new_destination, List<Integer> new_passengers) {
+        try {
+            String url = "http://localhost:8080/flights/"+id;
+
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("flightNumber", flight_number);
+            updates.put("origin_airport_id", new_origin);
+            updates.put("destination_airport_id", new_destination);
+            updates.put("passengers", new_passengers);
+
+            restTemplate.put(url, updates);
+
+            System.out.println("Flight updated successfully.");
+        } catch (Exception e){
+            System.out.println("Flight Failed, Error: "+e);
         }
     }
 }
