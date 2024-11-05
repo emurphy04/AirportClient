@@ -236,10 +236,6 @@ public class ClientApplication implements CommandLineRunner {
 								userInput = input.nextLine();
 								if (!Objects.equals(userInput, "STOP")){passenger_ids.add(Integer.parseInt(userInput));}
 							}
-							System.out.println(flightNumber);
-							System.out.println(origin);
-							System.out.println(dest);
-							System.out.println(passenger_ids);
 							flightService.addFlight(new FlightAdder(flightNumber, origin, dest, passenger_ids));
 							break;
 						case "4":
@@ -339,11 +335,6 @@ public class ClientApplication implements CommandLineRunner {
 								userInput = input.nextLine();
 								if (!Objects.equals(userInput, "STOP")){passenger_ids.add(Integer.parseInt(userInput));}
 							}
-							System.out.println(flight_number);
-							System.out.println(origin);
-							System.out.println(destination);
-							System.out.println(passenger_ids);
-							System.out.println(id);
 							flightService.updateFlight(id, flight_number, origin, destination, passenger_ids);
 							break;
 						case "4":
