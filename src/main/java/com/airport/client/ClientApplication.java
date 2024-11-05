@@ -41,6 +41,8 @@ public class ClientApplication implements CommandLineRunner {
 		Scanner input = new Scanner(System.in);
 		boolean running = true;
 
+		System.out.println("CI_MODE environment variable: " + System.getenv("CI_MODE"));
+
 		if ("true".equals(System.getenv("CI_MODE"))) {
 			System.out.println("CI mode detected, exiting application.");
 			running = false;
